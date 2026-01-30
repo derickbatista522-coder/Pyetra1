@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Para Pyetra 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+
+    .box {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      max-width: 420px;
+      width: 90%;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1em;
+      text-align: center;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #ff6f91;
+      color: #fff;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ff4f79;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .timer, .details {
+      margin-top: 15px;
+      background: rgba(0,0,0,0.25);
+      padding: 15px;
+      border-radius: 15px;
+    }
+
+    .heart {
+      font-size: 2em;
+      margin-top: 15px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TELA DE SENHA -->
+  <div class="box" id="login">
+    <h2>🔒 Área protegida</h2>
+    <p>Esse site é especial.<br>Digite a senha 💖</p>
+
+    <input type="password" id="password" placeholder="Senha">
+    <button onclick="checkPassword()">Entrar</button>
+
+    <p id="error"></p>
+  </div>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="box hidden" id="content">
+    <h2>Para minha irmã Pyetra 💖</h2>
+
+    <p>
+      Desde <strong>04 de maio de 2023</strong>, cada segundo ao seu lado
+      virou memória, amor e cuidado.
+    </p>
+
+    <div class="timer" id="mainTimer"></div>
+    <div class="details" id="detailedTimer"></div>
+
+    <div class="heart">💗</div>
+  </div>
+
+  <script>
+    const CORRECT_PASSWORD = "2712";
+
+    function checkPassword() {
+      const typed = document.getElementById("password").value;
+
+      if (typed === CORRECT_PASSWORD) {
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("content").classList.remove("hidden");
+        startTimer();
+      } else {
+        document.getElementById("error").innerText = "Senha incorreta 💔";
+      }
+    }
+
+    function startTimer() {
+      const startDate = new Date("2023-05-04T00:00:00");
+
+      function update() {
+        const now = new Date();
+        const diff = now - startDate;
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const totalMinutes = Math.floor(totalSeconds / 60);
+        const totalHours = Math.floor(totalMinutes / 60);
+        const totalDays = Math.floor(totalHours / 24);
+
+        document.getElementById("mainTimer").innerHTML = `
+          <strong>${totalDays}</strong> dias<br>
+          <strong>${totalHours % 24}</strong> horas<br>
+          <strong>${totalMinutes % 60}</strong> minutos<br>
+          <strong>${totalSeconds % 60}</strong> segundos
+        `;
+
+        let years = now.getFullYear() - startDate.getFullYear();
+        let months = now.getMonth() - startDate.getMonth();
+        let days = now.getDate() - startDate.getDate();
+
+        if (days < 0) {
+          months--;
+          days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+        }
+
+        if (months < 0) {
+          years--;
+          months += 12;
+        }
+
+        document.getElementById("detailedTimer").innerHTML = `
+          <strong>${years}</strong> anos,
+          <strong>${months}</strong> meses,
+          <strong>${days}</strong> dias<br>
+          e <strong>${totalSeconds}</strong> segundos juntas 💕
+        `;
+      }
+
+      update();
+      setInterval(update, 1000);
+    }
+  </script>
+
+</body>
+</html>
